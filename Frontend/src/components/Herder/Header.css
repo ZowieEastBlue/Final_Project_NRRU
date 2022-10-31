@@ -1,0 +1,143 @@
+.wrap_all_nav {
+    display: flex;
+    flex-direction: column;
+    overflow: visible;
+}
+
+.header {
+    background-color: #F5F5F5;
+    display: flex;
+    align-items: center;
+    position: sticky;
+    height: 80px;
+    width: 100%;
+    z-index: 1;
+}
+
+
+.header__logo {
+    width: 100px;
+    object-fit: contain;
+    margin-top: 18px;
+    margin-left: 20px;
+    margin-right: 20px;
+    flex: 1;
+}
+
+.header__search {
+    display: flex;
+    margin: auto;
+    flex: 1;
+}
+
+.header__searchInput {
+    height: 25px;
+    padding: 10px;
+    border: 1px solid #DBDBDB;
+    width: 100%;
+
+}
+
+.header__searchIcon {
+    background-color: #7a634f;
+    padding: 5px;
+    height: 25px !important;
+    color: #fff;
+}
+
+/* btn_nav */
+.btn_nav {
+    display: flex;
+    justify-content: space-evenly;
+    margin-left: 24px;
+    margin-right: 20px;
+    gap: 10px;
+}
+
+/* btn_upload */
+.btn_nav_upload{
+    border-radius: 17px;
+    background: #fff;
+    padding: 9px 15px;
+    color: #7a634f;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    text-decoration: none;
+
+    
+}
+.btn_nav_upload :hover{
+    transition: all 0.2s ease-in-out;
+    background: #7a634f;
+    color: #fff;
+}
+
+/* btn_login */
+.btn_nav_login{
+    border-radius: 17px;
+    background: #F5F5F5;
+    padding: 9px 15px;
+    color: #222;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    text-decoration: none;
+
+    
+}
+.btn_nav_login :hover{
+    transition: all 0.2s ease-in-out;
+    background: #7a634f;
+    color: #fff;
+}
+
+
+/* btn_register */
+.btn_nav_register{
+    border-radius: 17px;
+    background: #7a634f;
+    padding: 9px 15px;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    text-decoration: none;
+
+    
+}
+.btn_nav_register :hover{
+    transition: all 0.2s ease-in-out;
+    background: #7a634f;
+    color: #fff;
+}
+
+/* Navbar */
+.navlink {
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: sticky;
+    box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.3);
+    height: 50px;
+    /* z-index: 1; */
+}
+
+.nav_wrapper {
+    display: flex;
+    text-decoration: none;
+    list-style: none;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.nav_wrapper li a{
+    color: #222;
+    font-size: 16px;
+    padding: 5px 13px;    
+}
+
+.nav_wrapper li a:hover{
+    color: #c24f22;
+}

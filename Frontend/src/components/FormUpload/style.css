@@ -1,0 +1,31 @@
+.Container {
+    width: 100%;
+    height: 100vh;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.form_upload {
+    width: 600px;
+    height: 790px;
+    background-color: #fff;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3);
+    border-radius: 20px;
+    padding: 20px 70px;
+    
+}
+
+.title_upload {
+    font-weight: bold;
+    font-size: 25px;
+    color: #383737;
+    margin-bottom: 1rem;
+}
+
+.btn_upload {
+    background-color: #7a634f;
+    color: #fff;
+}
