@@ -1,4 +1,5 @@
 const db = require("../models");
+const fs = require("fs");
 
 const Mods = db.mods;
 const User = db.user;
@@ -133,6 +134,10 @@ exports.uploadMods = async (req, res) => {
   }
 };
 
+// ทดลอง DownloadFile-------------------------------------
+exports.downloadMods = async (req, res) => {};
+// -------------------------------------------------
+
 exports.ReadModsUser = async (req, res) => {
   try {
     const user = await Mods.findAll({ where: { user_id: req.params.id } });
@@ -146,6 +151,19 @@ exports.ReadModsUser = async (req, res) => {
 exports.listMods = async (req, res) => {
   try {
     const mod = await Mods.findAll({});
+    res.json(mod);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server Error!");
+  }
+};
+
+exports.listModsByTopDownload = async (req, res) => {
+  try {
+    const mod = await Mods.findAll({
+      order: [["m_download", "DESC"]],
+      limit: 3,
+    });
     res.json(mod);
   } catch (err) {
     console.log(err);
@@ -214,6 +232,7 @@ const handleQuery = async (req, res, query) => {
 
 //ค้นหาด้วยหมวดหมู่
 const handleCategory = async (req, res, category) => {
+  console.log(req.body.category);
   let mods = await Mods.findAll({
     where: { cat_id: category },
     include: [
@@ -246,7 +265,7 @@ const handleTheme = async (req, res, theme) => {
 
 // function รวม Filter ทั้งหมด
 exports.searchFilters = async (req, res) => {
-  const { query, category, theme } = req.body;
+  const { query, category, theme, filter } = req.body;
 
   //ค้นหาด้วย text
   if (query) {
@@ -255,14 +274,19 @@ exports.searchFilters = async (req, res) => {
   }
 
   //ค้นหาด้วย category
-  if (category) {
-    console.log("category=>", category);
-    await handleCategory(req, res, category);
-  }
+  // if (category) {
+  //   console.log("category=>", category);
+  //   await handleCategory(req, res, category);
+  // }
 
   //ค้นหาด้วย theme
   if (theme) {
     console.log("theme=>", theme);
     await handleTheme(req, res, theme);
+  }
+
+  if (filter) {
+    console.log("filter=>", filter);
+    await handleCategory(req, res, filter);
   }
 };

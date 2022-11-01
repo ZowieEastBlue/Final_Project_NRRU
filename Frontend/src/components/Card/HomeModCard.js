@@ -21,7 +21,7 @@ const HomeModCard = ({ mod }) => {
               className="img_card"
               style={{ height: "250px", objectFit: "cover" }}
               alt="example"
-              src={m_img1}
+              src={`http://localhost:5000/${m_img1}`}
             />
           }
         >

@@ -12,7 +12,7 @@ import simsheader from "../assets/images/sims_header.png";
 import { Link } from "react-router-dom";
 
 //function
-import { listMods } from "../../functions/mods";
+import { listMods, listModsByTopDownload } from "../../functions/mods";
 import { listNews } from "../../functions/news";
 
 const Homepages = () => {
@@ -25,17 +25,25 @@ const Homepages = () => {
   }, []);
 
   const loadData = () => {
-    listMods()
+    // listMods()
+    //   .then((res) => {
+    //     setModsData(res.data);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err.response);
+    //   });
+
+    listNews()
       .then((res) => {
-        setModsData(res.data);
+        setNewsData(res.data);
       })
       .catch((err) => {
         console.log(err.response);
       });
 
-    listNews()
+    listModsByTopDownload()
       .then((res) => {
-        setNewsData(res.data);
+        setModsData(res.data);
       })
       .catch((err) => {
         console.log(err.response);
@@ -123,10 +131,10 @@ const Homepages = () => {
         <div className="wrap_mods_rec">
           <span>แนะนำ</span>
           <Row gutter={32}>
-            {mod.map((item) => (
+            {modsData.map((item) => (
               <Col span={8}>
-                <div key={item.id} className="col_mods">
-                  <HomeModCard key={item.id} mod={item} />
+                <div key={item.m_id} className="col_mods">
+                  <HomeModCard key={item.m_title} mod={item} />
                 </div>
               </Col>
             ))}
@@ -139,7 +147,7 @@ const Homepages = () => {
         </div>
         <div className="wrap_news_rec">
           <Row gutter={[32, 16]}>
-            {newsData.map((item) => (
+            {newsData.slice(0, 4).map((item) => (
               <Col span={12}>
                 <div key={item.id} className="col_news">
                   <NewsCard news={item} />

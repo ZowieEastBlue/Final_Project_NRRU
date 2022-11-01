@@ -10,6 +10,8 @@ const {
   listModsForEdit,
   removeMods,
   searchFilters,
+  downloadMods,
+  listModsByTopDownload,
 } = require("../controllers/modsController");
 
 const { auth } = require("../middleware/auth");
@@ -22,6 +24,8 @@ const { uploadModMiddleware } = require("../middleware/upload");
 //@Access   Private
 router.post("/mods", uploadModMiddleware, uploadMods);
 
+router.post("/mods/download", downloadMods);
+
 //@Endpoint  http://localhost:5000/api/mods/users/:id
 //@Method   GET
 //@Access   Publish
@@ -31,6 +35,8 @@ router.get("/mods/users/:id", ReadModsUser);
 //@Method   GET
 //@Access   Publish
 router.get("/mods", listMods);
+
+router.get("/mods/listByTopdownload", listModsByTopDownload);
 
 //@Endpoint  http://localhost:5000/api/mods
 //@Method   GET
@@ -51,6 +57,6 @@ router.delete("/mods/removemods/:id", removeMods);
 //@Method   POST
 //@Access   Publish
 // Search
-router.post('/search/filters', searchFilters)
+router.post("/search/filters", searchFilters);
 
 module.exports = router;

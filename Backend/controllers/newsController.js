@@ -12,9 +12,6 @@ exports.addNews = async (req, res) => {
       n_cover: req.file.path,
       n_detail: req.body.description,
     });
-    // if (rows.affectedRows === 1) {
-    //   return res.json({ success: true });
-    // }
     res.status(201).json({ success: true, message: "เพิ่มข่าวสำเร็จ" });
   } catch (err) {
     console.log(err);
@@ -25,10 +22,9 @@ exports.addNews = async (req, res) => {
 //เรียกข่าวทั้งหมด
 exports.getAllNews = async (req, res) => {
   try {
-    const rows = await News.findAll({});
-    // if (rows.affectedRows === 1) {
-    //   return res.json({ success: true });
-    // }
+    const rows = await News.findAll({
+      order: [["create_at", "DESC"]],
+    });
     res.status(200).json(rows);
   } catch (err) {
     console.log(err);
