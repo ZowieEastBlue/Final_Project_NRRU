@@ -38,3 +38,7 @@ export const removeMods = async (authtoken, id) => {
 
 export const searchFilters = async (arg) =>
   await axios.post(process.env.REACT_APP_API + "/search/filters", arg);
+
+export const DownloadmodsByID = async (id) => {
+  return await axios.get(process.env.REACT_APP_API + "/mods/download/" + id);
+};

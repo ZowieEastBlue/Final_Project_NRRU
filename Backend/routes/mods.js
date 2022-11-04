@@ -24,7 +24,8 @@ const { uploadModMiddleware } = require("../middleware/upload");
 //@Access   Private
 router.post("/mods", uploadModMiddleware, uploadMods);
 
-router.post("/mods/download", downloadMods);
+// TestDownload
+router.get("/mods/download/:id", downloadMods);
 
 //@Endpoint  http://localhost:5000/api/mods/users/:id
 //@Method   GET

@@ -9,6 +9,9 @@ import moment from "moment";
 import Footer from "../components/Footer/Footer";
 import { DownloadOutlined } from "@ant-design/icons";
 
+// function
+import { DownloadmodsByID } from "../functions/mods";
+
 const OneMod = () => {
   const param = useParams();
 
@@ -31,6 +34,10 @@ const OneMod = () => {
       throw error;
     }
   };
+
+  // const hanledDownload = () => {
+  //   DownloadmodsByID(param.id).then((res) => res.data);
+  // };
 
   return (
     <>
@@ -88,9 +95,15 @@ const OneMod = () => {
                   <span className="title">จำนวนการดาวน์โหลด :</span>
                   <span className="download">{modsData.m_download}</span>
                 </AmountDownload>
-                <DownloadButton icon={<DownloadOutlined />}>
-                  ดาวน์โหลด
-                </DownloadButton>
+                <a
+                  href={
+                    process.env.REACT_APP_API + `/mods/download/${param.id}`
+                  }
+                >
+                  <DownloadButton icon={<DownloadOutlined />}>
+                    ดาวน์โหลด
+                  </DownloadButton>
+                </a>
               </WrapDownloadDetail>
             </Col>
           </Row>

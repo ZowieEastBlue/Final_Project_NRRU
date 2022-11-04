@@ -24,34 +24,7 @@ const { readdirSync } = require("fs");
 //ใส่ไว้ก่อน
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
-// const fs = require("fs");
-// const multer = require("multer");
-// const storage = multer.diskStorage({
-//   destination: (req, file, callback) => {
-//     // const dir = "./uploads";
-//     // !fs.existsSync(dir) && fs.mkdirSync(dir);
-//     callback(null, "./uploads");
-//   },
-//   filename: (req, file, callback) => {
-//     // const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-//     // let ext = file.originalname.lastIndexOf(".");
-//     // ext = file.originalname.substr(ext + 1);
-//     // callback(null, `${file.fieldname}-${uniqueSuffix}.${ext}`);
-//     callback(null, `image-${Date.now()}` + "-" + file.originalname);
-//   },
-// });
-// const multerFilter = (req, file, cb) => {
-//   if (!file.originalname.match(/\.(png|jpg|PNG)$/)) {
-//     // upload only png and jpg format
-//     return cb(new Error("Please upload a Image"));
-//   }
-//   cb(null, true);
-// };
-// const upload = multer({ storage: storage, fileFilter: multerFilter });
 
-// app.post("/upload/single", upload.single("file"), (req, res) => {
-//   res.json({ file: req.file });
-// });
 //--------------------------------------------------------------------------------------------------------------
 // middleware
 app.use(cors());

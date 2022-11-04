@@ -4,11 +4,11 @@ import { Card } from "antd";
 const { Meta } = Card;
 
 const HomeModCard = ({ mod }) => {
-  const { m_name, m_img1 } = mod;
+  const { m_name, m_img1, m_id } = mod;
 
   return (
     <>
-      <Link to={"/onemod/" + mod.id}>
+      <Link to={"/onemod/" + m_id}>
         <Card
           hoverable
           style={{

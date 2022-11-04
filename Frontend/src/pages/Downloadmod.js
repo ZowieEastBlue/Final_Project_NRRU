@@ -1,11 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import HomeModCard from "../components/Card/HomeModCard";
 import DownloadCard from "../components/Card/DownloadCard";
-import ProfileModCard from "../components/Card/ProfileModCard";
 import { Col, Row, Pagination, Checkbox } from "antd";
 import { useState, useEffect } from "react";
-import Listtheme from "../components/ListTheme/Listtheme";
 import Footer from "../components/Footer/Footer";
 import { Container } from "react-bootstrap";
 import axios from "axios";
@@ -73,59 +70,13 @@ const Downloadmods = () => {
     setCurrent(page);
   };
 
-  // // เลือกตัวเลือก หมวดหมู่
-  // const handleCheckCategory = (e) => {
-  //   //ค่าปัจจุบันที่ check
-  //   let inCheck = e.target.value;
-
-  //   //ค่าเดิมของ check
-  //   let inState = [...categorySelect];
-
-  //   let findCheck = inState.indexOf(inCheck);
-
-  //   if (findCheck === -1) {
-  //     inState.push(inCheck);
-  //   } else {
-  //     inState.splice(findCheck, 1);
-  //   }
-  //   setCategorySelect(inState);
-  //   fetchDataFilter({ category: inState });
-  //   if (inState.length < 1) {
-  //     loadData();
-  //   }
-  // };
-
-  // // เลือกตัวเลือก ธีม
-  // const handleCheckTheme = (e) => {
-  //   //ค่าปัจจุบันที่ check
-  //   let inCheck = e.target.value;
-  //   console.log("e=> ", e.target.value);
-
-  //   //ค่าเดิมของ check
-  //   let inState = [...themeSelect];
-
-  //   let findCheck = inState.indexOf(inCheck);
-
-  //   if (findCheck === -1) {
-  //     inState.push(inCheck);
-  //   } else {
-  //     inState.splice(findCheck, 1);
-  //   }
-  //   setThemeSelect(inState);
-  //   fetchDataFilter({ theme: inState });
-  //   if (inState.length < 1) {
-  //     loadData();
-  //   }
-  // };
-
-  // ทดลอง Fitler--------------------------------------------------
   // เลือกตัวเลือก หมวดหมู่
-  const handleCheckFilter = (e) => {
+  const handleCheckCategory = (e) => {
     //ค่าปัจจุบันที่ check
     let inCheck = e.target.value;
 
     //ค่าเดิมของ check
-    let inState = [...newFilter[0]];
+    let inState = [...categorySelect];
 
     let findCheck = inState.indexOf(inCheck);
 
@@ -134,8 +85,7 @@ const Downloadmods = () => {
     } else {
       inState.splice(findCheck, 1);
     }
-    setNewFilter({ category: inState });
-    console.log(inState);
+    setCategorySelect(inState);
     fetchDataFilter({ category: inState });
     if (inState.length < 1) {
       loadData();
@@ -149,7 +99,7 @@ const Downloadmods = () => {
     console.log("e=> ", e.target.value);
 
     //ค่าเดิมของ check
-    let inState = [...newFilter[1]];
+    let inState = [...themeSelect];
 
     let findCheck = inState.indexOf(inCheck);
 
@@ -158,12 +108,59 @@ const Downloadmods = () => {
     } else {
       inState.splice(findCheck, 1);
     }
-    setNewFilter({ theme: inState });
-    // fetchDataFilter({ theme: inState });
+    setThemeSelect(inState);
+    fetchDataFilter({ theme: inState });
     if (inState.length < 1) {
       loadData();
     }
   };
+
+  // ทดลอง Fitler--------------------------------------------------
+  // เลือกตัวเลือก หมวดหมู่
+  // const handleCheckFilter = (e) => {
+  //   //ค่าปัจจุบันที่ check
+  //   let inCheck = e.target.value;
+
+  //   //ค่าเดิมของ check
+  //   let inState = [...themeSelect];
+
+  //   let findCheck = inState.indexOf(inCheck);
+
+  //   if (findCheck === -1) {
+  //     inState.push(inCheck);
+  //   } else {
+  //     inState.splice(findCheck, 1);
+  //   }
+  //   setNewFilter({ category: inState });
+  //   console.log(inState);
+  //   setThemeSelect({ category: inState });
+  //   if (inState.length < 1) {
+  //     loadData();
+  //   }
+  // };
+
+  // // เลือกตัวเลือก ธีม
+  // const handleCheckTheme = (e) => {
+  //   //ค่าปัจจุบันที่ check
+  //   let inCheck = e.target.value;
+  //   console.log("e=> ", e.target.value);
+
+  //   //ค่าเดิมของ check
+  //   let inState = [...newFilter[1]];
+
+  //   let findCheck = inState.indexOf(inCheck);
+
+  //   if (findCheck === -1) {
+  //     inState.push(inCheck);
+  //   } else {
+  //     inState.splice(findCheck, 1);
+  //   }
+  //   setNewFilter({ theme: inState });
+  //   // fetchDataFilter({ theme: inState });
+  //   if (inState.length < 1) {
+  //     loadData();
+  //   }
+  // };
 
   return (
     <>
@@ -175,7 +172,7 @@ const Downloadmods = () => {
             <h5 className="title">หมวดหมู่</h5>
             <div className="categoryList">
               {category.map((item, index) => (
-                <Checkbox onChange={handleCheckFilter} value={item.cat_id}>
+                <Checkbox onChange={handleCheckCategory} value={item.cat_id}>
                   {item.cat_name}
                 </Checkbox>
               ))}
@@ -189,6 +186,8 @@ const Downloadmods = () => {
                 </Checkbox>
               ))}
             </div>
+            <hr />
+            <h5 className="title">ตัวเลือกเพิ่มเติม</h5>
           </PanelWrap>
           <ListWrap>
             <Row gutter={[16, 16]}>
@@ -208,16 +207,6 @@ const Downloadmods = () => {
     </>
   );
 };
-
-// styled component
-// const Container = styled.section`
-//   width: 1320px;
-//   height: 100vh;
-//   // background-color: #333;
-//   margin: 0 auto;
-//   display: flex;
-//   flex-direction: column;
-// `;
 
 const PanelListWrap = styled.div`
   display: flex;

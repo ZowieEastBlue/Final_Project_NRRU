@@ -69,11 +69,11 @@ const ManageNews = () => {
 
   // columns ข้อมูลตาราง
   const columns = [
-    {
-      title: "ID ข่าว",
-      dataIndex: "n_id",
-      key: "1",
-    },
+    // {
+    //   title: "ID ข่าว",
+    //   dataIndex: "n_id",
+    //   key: "1",
+    // },
     {
       title: "หัวข้อข่าว",
       dataIndex: "n_title",

@@ -9,11 +9,12 @@ const Theme = db.theme;
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 
+// upload mods
 exports.uploadMods = async (req, res) => {
   try {
     // ตัวเลือก category
     // console.log(req.body);
-    // console.log(req.files);
+    console.log(req.files);
     let category = req.body.cat_id[0];
     let CategoryOption = req.body.cat_id[2];
 
@@ -134,10 +135,21 @@ exports.uploadMods = async (req, res) => {
   }
 };
 
-// ทดลอง DownloadFile-------------------------------------
-exports.downloadMods = async (req, res) => {};
+// download mods
+exports.downloadMods = async (req, res) => {
+  const Dmods = await Mods.findAll({
+    where: {
+      m_id: req.params.id,
+    },
+  });
+
+  const file = await Dmods[0].m_file;
+
+  res.download(file);
+};
 // -------------------------------------------------
 
+// เรียก mod จาก id ผู้ใช้แสดงหน้าโปรไฟล์
 exports.ReadModsUser = async (req, res) => {
   try {
     const user = await Mods.findAll({ where: { user_id: req.params.id } });
@@ -148,6 +160,7 @@ exports.ReadModsUser = async (req, res) => {
   }
 };
 
+// เรียกดู Mods ทั้งหมด
 exports.listMods = async (req, res) => {
   try {
     const mod = await Mods.findAll({});
@@ -158,6 +171,7 @@ exports.listMods = async (req, res) => {
   }
 };
 
+// เรียก MOds เรียงจากยอดดาวน์โหลดสูงสุด
 exports.listModsByTopDownload = async (req, res) => {
   try {
     const mod = await Mods.findAll({
@@ -171,6 +185,7 @@ exports.listModsByTopDownload = async (req, res) => {
   }
 };
 
+// เรียก MOds จาก ID
 exports.getOneMods = async (req, res) => {
   try {
     // const mod = await Mods.findAll({ where: { m_id: req.params.id } });
@@ -217,7 +232,6 @@ exports.removeMods = async (req, res) => {
 // ค้นหาตามชื่อ(text)
 const handleQuery = async (req, res, query) => {
   let mods = await Mods.findAll({
-    where: { m_name: { [Op.like]: "%" + query + "%" } },
     include: [
       {
         model: Category,
@@ -226,6 +240,13 @@ const handleQuery = async (req, res, query) => {
         model: Theme,
       },
     ],
+    where: {
+      [Op.or]: [
+        { m_name: { [Op.like]: "%" + query + "%" } },
+        // { cat_id: { [Op.like]: "%" + query + "%" } },
+      ],
+      // cat_name: { [Op.like]: "%" + query + "%" },
+    },
   });
   res.send(mods);
 };
@@ -273,11 +294,11 @@ exports.searchFilters = async (req, res) => {
     await handleQuery(req, res, query);
   }
 
-  //ค้นหาด้วย category
-  // if (category) {
-  //   console.log("category=>", category);
-  //   await handleCategory(req, res, category);
-  // }
+  // ค้นหาด้วย category
+  if (category) {
+    console.log("category=>", category);
+    await handleCategory(req, res, category);
+  }
 
   //ค้นหาด้วย theme
   if (theme) {
