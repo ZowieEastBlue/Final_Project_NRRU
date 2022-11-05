@@ -145,6 +145,17 @@ exports.downloadMods = async (req, res) => {
 
   const file = await Dmods[0].m_file;
 
+  const UpdateCount = Mods.update(
+    {
+      m_download: Sequelize.literal(`m_download + ${1}`),
+    },
+    {
+      where: {
+        m_id: req.params.id,
+      },
+    }
+  );
+
   res.download(file);
 };
 // -------------------------------------------------
