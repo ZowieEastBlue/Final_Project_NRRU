@@ -72,12 +72,14 @@ const PostNews = () => {
       formData.append("description", detail.description.value);
       formData.append("n_cover", image);
 
-      axios.post(`http://localhost:5000/api/addnews`, formData).then((res) => {
-        if (res.data.success === true) {
-          message.success(res.data.message);
-          navigate("/admin");
-        }
-      });
+      axios
+        .post(process.env.REACT_APP_API + `/addnews`, formData)
+        .then((res) => {
+          if (res.data.success === true) {
+            message.success(res.data.message);
+            navigate("/admin");
+          }
+        });
     } catch (error) {
       throw error;
     }

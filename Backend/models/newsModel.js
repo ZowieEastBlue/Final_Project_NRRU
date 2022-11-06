@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
       tableName: "tb_news",
       timestamps: true,
       createdAt: "create_at",
-      updatedAt: false,
+      // updatedAt: false,
     }
   );
 

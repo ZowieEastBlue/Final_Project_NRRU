@@ -5,6 +5,7 @@ const {
   addNews,
   getAllNews,
   getOneNews,
+  EditNews,
 } = require("../controllers/newsController");
 
 const { uploadCoverNewsMiddleware } = require("../middleware/upload");
@@ -17,5 +18,6 @@ const { auth } = require("../middleware/auth");
 router.post("/addnews", uploadCoverNewsMiddleware, addNews);
 router.get("/getAllNews", getAllNews);
 router.get("/getOneNews/:id", getOneNews);
+router.put("/editnews/:id", uploadCoverNewsMiddleware, EditNews);
 
 module.exports = router;
