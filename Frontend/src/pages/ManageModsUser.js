@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
 import {
   Form,
   Input,
@@ -104,10 +105,12 @@ const ManageModsUser = () => {
       key: "7",
       render: (_, record) => (
         <Space size="middle">
-          <EditOutlined
-            style={{ color: "orange" }}
-            // onClick={() => showModal(record.user_i)}
-          />
+          <Link to={`/editmods/${record.m_id}`}>
+            <EditOutlined
+              style={{ color: "orange" }}
+              // onClick={() => showModal(record.user_i)}
+            />
+          </Link>
           <DeleteOutlined
             style={{ color: "red" }}
             onClick={() => handleRemove(record.m_id)}
@@ -138,11 +141,20 @@ const ManageModsUser = () => {
   return (
     <>
       <Container>
-        จัดการMODs
+        <Title>จัดการMODs</Title>
         <Table columns={columns} dataSource={data}></Table>
       </Container>
     </>
   );
 };
+
+const Title = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rem;
+  font-size: 2rem;
+  font-weight: bold;
+`;
 
 export default ManageModsUser;

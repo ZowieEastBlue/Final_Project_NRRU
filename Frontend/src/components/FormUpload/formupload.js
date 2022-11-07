@@ -42,48 +42,54 @@ function Formupload() {
 
   const loadData = () => {
     const getTheme = () => {
-      axios.get("http://localhost:5000/api/theme").then((res) => {
+      axios.get(process.env.REACT_APP_API + "/theme").then((res) => {
         setSelectTheme(res.data);
       });
     };
     const getCategory = () => {
-      axios.get("http://localhost:5000/api/category").then((res) => {
+      axios.get(process.env.REACT_APP_API + "/category").then((res) => {
         setSelectCategory(res.data);
       });
     };
     const getShoes = () => {
-      axios.get("http://localhost:5000/api/category/shoes").then((res) => {
+      axios.get(process.env.REACT_APP_API + "/category/shoes").then((res) => {
         setOptionShoes(res.data);
       });
     };
     const getHouse = () => {
-      axios.get("http://localhost:5000/api/category/house").then((res) => {
+      axios.get(process.env.REACT_APP_API + "/category/house").then((res) => {
         setOptionHouse(res.data);
       });
     };
     const getHairstyle = () => {
-      axios.get("http://localhost:5000/api/category/hairstyle").then((res) => {
-        setOptionHairstyle(res.data);
-      });
+      axios
+        .get(process.env.REACT_APP_API + "/category/hairstyle")
+        .then((res) => {
+          setOptionHairstyle(res.data);
+        });
     };
     const getFurniture = () => {
-      axios.get("http://localhost:5000/api/category/furniture").then((res) => {
-        setOptionFurniture(res.data);
-      });
+      axios
+        .get(process.env.REACT_APP_API + "/category/furniture")
+        .then((res) => {
+          setOptionFurniture(res.data);
+        });
     };
     const getClothes = () => {
-      axios.get("http://localhost:5000/api/category/clothes").then((res) => {
+      axios.get(process.env.REACT_APP_API + "/category/clothes").then((res) => {
         setOptionClothes(res.data);
       });
     };
     const getCharacter = () => {
-      axios.get("http://localhost:5000/api/category/character").then((res) => {
-        setOptionCharacter(res.data);
-      });
+      axios
+        .get(process.env.REACT_APP_API + "/category/character")
+        .then((res) => {
+          setOptionCharacter(res.data);
+        });
     };
     const getAccessories = () => {
       axios
-        .get("http://localhost:5000/api/category/accessories")
+        .get(process.env.REACT_APP_API + "/category/accessories")
         .then((res) => {
           setOptionAccessories(res.data);
         });
@@ -196,15 +202,6 @@ function Formupload() {
         console.log(err);
         message.error(err.response);
       });
-    // UploadMods(values)
-    //   .then((res) => {
-    //     message.success(res.data.message);
-    //     console.log(res);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err.response);
-    //     message.error(err.response);
-    //   });
   };
 
   return (

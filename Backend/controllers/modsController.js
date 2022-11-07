@@ -182,7 +182,7 @@ exports.listMods = async (req, res) => {
   }
 };
 
-// เรียก MOds เรียงจากยอดดาวน์โหลดสูงสุด
+// เรียก Mods เรียงจากยอดดาวน์โหลดสูงสุด
 exports.listModsByTopDownload = async (req, res) => {
   try {
     const mod = await Mods.findAll({
@@ -220,6 +220,18 @@ exports.listModsForEdit = async (req, res) => {
   try {
     console.log("req=>", req.params);
     const mod = await Mods.findAll({ where: { user_id: req.params.id } });
+    res.json(mod);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server Error!");
+  }
+};
+
+//เรียก Mods By ID เพื่อแก้ไข
+exports.ReadModsToEditByID = async (req, res) => {
+  try {
+    console.log("req=>", req.params);
+    const mod = await Mods.findAll({ where: { m_id: req.params.id } });
     res.json(mod);
   } catch (err) {
     console.log(err);

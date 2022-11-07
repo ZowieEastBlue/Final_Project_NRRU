@@ -12,6 +12,7 @@ const {
   searchFilters,
   downloadMods,
   listModsByTopDownload,
+  ReadModsToEditByID,
 } = require("../controllers/modsController");
 
 const { auth } = require("../middleware/auth");
@@ -48,9 +49,10 @@ router.get("/onemods/:id", getOneMods);
 //@Method   GET
 //@Access   Publish
 router.get("/listmodsForEdit/:id", listModsForEdit);
+router.get("/ReadModsToEdit/:id", ReadModsToEditByID);
 
 //@Endpoint  http://localhost:5000/api/mods
-//@Method   DELETE
+//@Method   GET
 //@Access   Publish
 router.delete("/mods/removemods/:id", removeMods);
 
