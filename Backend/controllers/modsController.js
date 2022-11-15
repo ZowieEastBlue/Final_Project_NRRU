@@ -307,30 +307,46 @@ const handleTheme = async (req, res, theme) => {
   res.send(mods);
 };
 
+const handleFilter = async (req, res, theme) => {
+  let mods = await Mods.findAll({
+    where: { theme_id: theme },
+    include: [
+      {
+        model: Category,
+      },
+      {
+        model: Theme,
+      },
+    ],
+  });
+  res.send(mods);
+};
+
 // function รวม Filter ทั้งหมด
 exports.searchFilters = async (req, res) => {
-  const { query, category, theme, filter } = req.body;
+  console.log(req.body);
+  // const { query, category, theme, filter } = req.body;
 
   //ค้นหาด้วย text
-  if (query) {
-    console.log("query", query);
-    await handleQuery(req, res, query);
-  }
+  // if (query) {
+  //   // console.log("query", query);
+  //   await handleQuery(req, res, query);
+  // }
 
   // ค้นหาด้วย category
-  if (category) {
-    console.log("category=>", category);
-    await handleCategory(req, res, category);
-  }
+  // if (category) {
+  //   // console.log("category=>", category);
+  //   await handleCategory(req, res, category);
+  // }
 
-  //ค้นหาด้วย theme
-  if (theme) {
-    console.log("theme=>", theme);
-    await handleTheme(req, res, theme);
-  }
+  // //ค้นหาด้วย theme
+  // if (theme) {
+  //   // console.log("theme=>", theme);
+  //   await handleTheme(req, res, theme);
+  // }
 
-  if (filter) {
-    console.log("filter=>", filter);
-    await handleCategory(req, res, filter);
-  }
+  // if (filter) {
+  //   // console.log("filter=>", filter);
+  //   await handleFilter(req, res, filter);
+  // }
 };
