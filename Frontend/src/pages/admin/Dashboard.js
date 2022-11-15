@@ -114,7 +114,7 @@ const Dashboard = () => {
       key: "2",
     },
     {
-      title: "ผู้อัพโหลด",
+      title: "ผู้อัปโหลด",
       dataIndex: ["user", "username"],
       key: "3",
     },

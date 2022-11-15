@@ -34,7 +34,7 @@ function Topnav() {
 
   const SearchSubmit = (value) => {
     // e.preventDefault()
-    // console.log(value)
+    // console.log(value);
     dispatch(
       searchQue({
         text: value,

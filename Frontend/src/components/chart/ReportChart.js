@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Bar } from "react-chartjs-2";
 import { Typography } from "antd";
 import { MinusOutlined } from "@ant-design/icons";
@@ -33,6 +33,7 @@ const ReportChart = () => {
   const [userData, setUserData] = useState([]);
   const [modsData, setModsData] = useState([]);
 
+  // loop ข้อมูลสำหรับใส่ลงในกราฟ------------
   const labelData = [];
   const ModDataArr = [];
   const UserDataArr = [];
@@ -40,10 +41,35 @@ const ReportChart = () => {
     labelData.push(dataObj.Month);
     ModDataArr.push(dataObj.Total);
   }
-
   for (const dataObj of userData) {
     UserDataArr.push(dataObj.Total);
   }
+
+  const monthNames = [
+    "มกราคม",
+    "กุมภาพันธ์",
+    "มีนาคม",
+    "เมษายน",
+    "พฤษภาคม",
+    "มิถุนายน",
+    "กรกฎาคม",
+    "สิงหาคม",
+    "กันยายน",
+    "ตุลาคม",
+    "พฤศจิกายน",
+    "ธันวาคม",
+  ];
+
+  const test = labelData.map((labelData) => ({
+    labelData,
+    name: monthNames[labelData - 1],
+  }));
+
+  const month = [];
+  for (const dataObj of test) {
+    month.push(dataObj.name);
+  }
+  // จบ loop ข้อมูลสำหรับใส่ลงในกราฟ------------
 
   useEffect(() => {
     getModsGroupByMonth()
@@ -73,7 +99,7 @@ const ReportChart = () => {
   };
 
   const data = {
-    labels: labelData,
+    labels: month,
     datasets: [
       {
         label: "จำนวนMODที่อัปโหลด",
@@ -93,7 +119,9 @@ const ReportChart = () => {
       <>
         <div className="linechart">
           <div>
-            <Title level={5}>จำนวนMODที่ถูกอัปโหลดในแต่ละเดือน</Title>
+            <Title level={5}>
+              จำนวนMODที่ถูกอัปโหลดและจำนวนสมาชิกใหม่ในแต่ละเดือน
+            </Title>
             {/* <Paragraph className="lastweek">
               than last week <span className="bnb2">+30%</span>
             </Paragraph> */}
