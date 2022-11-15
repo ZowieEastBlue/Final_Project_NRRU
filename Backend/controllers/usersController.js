@@ -1,6 +1,5 @@
 const db = require("../models");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+const Sequelize = require("sequelize");
 
 //image Upload
 const multer = require("multer");
@@ -71,4 +70,17 @@ exports.uploadAvatarUser = async (req, res) => {
     console.log(err);
     res.status(500).send("Server Error!");
   }
+};
+
+//สำหรับ DashBoard-----------------------------------------------------------
+exports.getUserGropByMonth = async (req, res) => {
+  let user = await User.findAll({
+    attributes: [
+      [Sequelize.fn("MONTH", Sequelize.col("create_At")), "Month"],
+      [Sequelize.fn("COUNT", Sequelize.col("user_id")), "Total"],
+    ],
+    group: [Sequelize.fn("MONTH", Sequelize.col("create_At")), "Month"],
+  });
+
+  res.send(user);
 };

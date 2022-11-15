@@ -9,6 +9,7 @@ const {
   updateUsers,
   removeUsers,
   uploadAvatarUser,
+  getUserGropByMonth,
 } = require("../controllers/usersController");
 
 //middleware
@@ -46,5 +47,8 @@ router.put(
 //@Method   DELETE
 //@Access   Private
 router.delete("/users/:id", auth, removeUsers);
+
+//สำหรับ dashboard--------------------------------
+router.get("/users/getUserGroupBy/Mouth", getUserGropByMonth);
 
 module.exports = router;

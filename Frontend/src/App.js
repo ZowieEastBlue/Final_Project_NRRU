@@ -28,6 +28,8 @@ import PostNews from "./pages/admin/PostNews";
 import ManageNews from "./pages/admin/ManageNews";
 import EditNews from "./pages/admin/EditNews";
 import Main from "./components/admin/layout/Main";
+import Dashboard from "./pages/admin/Dashboard";
+import ManageMods from "./pages/ManageMods";
 
 //privateRoute
 import PrivateRouteAdmin from "./routes/privateRouteAdmin";
@@ -190,12 +192,15 @@ function App() {
           {/* PrivateRoute For Admin */}
           <Route element={<PrivateRouteAdmin />}>
             <Route element={<Main />} path="/admin" exact />
+            <Route element={<AdminHome />} path="/admin/Testdashboard" exact />
+            <Route element={<Dashboard />} path="/admin/dashboard" exact />
             <Route element={<Tables />} path="/admin/tables" exact />
             <Route element={<Billing />} path="/admin/billing" exact />
             <Route element={<AdminProfile />} path="/admin/profile" exact />
             <Route element={<ManageUser />} path="/admin/manage-user" exact />
             <Route element={<PostNews />} path="/admin/addnews" exact />
             <Route element={<ManageNews />} path="/admin/manage-news" exact />
+            <Route element={<ManageMods />} path="/admin/manage-mods" exact />
             <Route
               element={<EditNews />}
               path="/admin/manage-news/edit-news/:id"

@@ -6,6 +6,7 @@ const {
   getAllNews,
   getOneNews,
   EditNews,
+  RemoveNews,
 } = require("../controllers/newsController");
 
 const { uploadCoverNewsMiddleware } = require("../middleware/upload");
@@ -19,5 +20,6 @@ router.post("/addnews", uploadCoverNewsMiddleware, addNews);
 router.get("/getAllNews", getAllNews);
 router.get("/getOneNews/:id", getOneNews);
 router.put("/editnews/:id", uploadCoverNewsMiddleware, EditNews);
+router.delete("/removeNews/:id", RemoveNews);
 
 module.exports = router;

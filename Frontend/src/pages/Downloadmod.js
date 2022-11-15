@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import DownloadCard from "../components/Card/DownloadCard";
-import { Col, Row, Pagination, Checkbox } from "antd";
+import { Col, Row, Pagination, Checkbox, Button } from "antd";
 import { useState, useEffect } from "react";
 import Footer from "../components/Footer/Footer";
 import { Container } from "react-bootstrap";
@@ -11,7 +11,7 @@ import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 
 //function
-import { listMods, searchFilters } from "../functions/mods";
+import { listMods, searchFilters, GetFilters } from "../functions/mods";
 import { listCategory } from "../functions/category";
 import { listTheme } from "../functions/theme";
 
@@ -21,14 +21,16 @@ const Downloadmods = () => {
   //Category Data
   const [category, setCategory] = useState([]);
   const [categorySelect, setCategorySelect] = useState([]);
+  console.log("categorySelect=>", categorySelect);
 
   //Theme Data
   const [theme, setTheme] = useState([]);
   const [themeSelect, setThemeSelect] = useState([]);
+  console.log("themeSelect=>", themeSelect);
 
-  const [newFilter, setNewFilter] = useState([{ category: [] }, { theme: [] }]);
+  // const [newFilter, setNewFilter] = useState([{ category: [] }, { theme: [] }]);
 
-  console.log("Filter", newFilter);
+  // console.log("Filter", newFilter);
 
   const { searchStore } = useSelector((state) => ({ ...state }));
   // text
@@ -63,14 +65,60 @@ const Downloadmods = () => {
     });
   };
 
-  const [current, setCurrent] = useState();
+  // const [current, setCurrent] = useState();
 
-  const onChange = (page) => {
-    console.log(page);
-    setCurrent(page);
-  };
+  // const onChange = (page) => {
+  //   console.log(page);
+  //   setCurrent(page);
+  // };
 
-  // เลือกตัวเลือก หมวดหมู่
+  // // เลือกตัวเลือก หมวดหมู่
+  // const handleCheckCategory = (e) => {
+  //   //ค่าปัจจุบันที่ check
+  //   let inCheck = e.target.value;
+
+  //   //ค่าเดิมของ check
+  //   let inState = [...categorySelect];
+
+  //   let findCheck = inState.indexOf(inCheck);
+
+  //   if (findCheck === -1) {
+  //     inState.push(inCheck);
+  //   } else {
+  //     inState.splice(findCheck, 1);
+  //   }
+  //   setCategorySelect(inState);
+  //   fetchDataFilter({ category: inState });
+  //   if (inState.length < 1) {
+  //     loadData();
+  //   }
+  // };
+
+  // // เลือกตัวเลือก ธีม
+  // const handleCheckTheme = (e) => {
+  //   //ค่าปัจจุบันที่ check
+  //   let inCheck = e.target.value;
+  //   console.log("e=> ", e.target.value);
+
+  //   //ค่าเดิมของ check
+  //   let inState = [...themeSelect];
+
+  //   let findCheck = inState.indexOf(inCheck);
+
+  //   if (findCheck === -1) {
+  //     inState.push(inCheck);
+  //   } else {
+  //     inState.splice(findCheck, 1);
+  //   }
+  //   setThemeSelect(inState);
+  //   fetchDataFilter({ theme: inState });
+  //   if (inState.length < 1) {
+  //     loadData();
+  //   }
+  // };
+
+  // ทดลอง Fitler--------------------------------------------------
+  //เลือกตัวเลือก หมวดหมู่
   const handleCheckCategory = (e) => {
     //ค่าปัจจุบันที่ check
     let inCheck = e.target.value;
@@ -86,17 +134,17 @@ const Downloadmods = () => {
       inState.splice(findCheck, 1);
     }
     setCategorySelect(inState);
-    fetchDataFilter({ category: inState });
-    if (inState.length < 1) {
-      loadData();
-    }
+    // console.log(inState);
+    // if (inState.length < 1) {
+    //   loadData();
+    // }
   };
 
   // เลือกตัวเลือก ธีม
   const handleCheckTheme = (e) => {
     //ค่าปัจจุบันที่ check
     let inCheck = e.target.value;
-    console.log("e=> ", e.target.value);
+    // console.log("e=> ", e.target.value);
 
     //ค่าเดิมของ check
     let inState = [...themeSelect];
@@ -109,58 +157,22 @@ const Downloadmods = () => {
       inState.splice(findCheck, 1);
     }
     setThemeSelect(inState);
-    fetchDataFilter({ theme: inState });
-    if (inState.length < 1) {
-      loadData();
-    }
+    // fetchDataFilter({ theme: inState });
+    // if (inState.length < 1) {
+    //   loadData();
+    // }
   };
 
-  // ทดลอง Fitler--------------------------------------------------
-  // เลือกตัวเลือก หมวดหมู่
-  // const handleCheckFilter = (e) => {
-  //   //ค่าปัจจุบันที่ check
-  //   let inCheck = e.target.value;
-
-  //   //ค่าเดิมของ check
-  //   let inState = [...themeSelect];
-
-  //   let findCheck = inState.indexOf(inCheck);
-
-  //   if (findCheck === -1) {
-  //     inState.push(inCheck);
-  //   } else {
-  //     inState.splice(findCheck, 1);
-  //   }
-  //   setNewFilter({ category: inState });
-  //   console.log(inState);
-  //   setThemeSelect({ category: inState });
-  //   if (inState.length < 1) {
-  //     loadData();
-  //   }
-  // };
-
-  // // เลือกตัวเลือก ธีม
-  // const handleCheckTheme = (e) => {
-  //   //ค่าปัจจุบันที่ check
-  //   let inCheck = e.target.value;
-  //   console.log("e=> ", e.target.value);
-
-  //   //ค่าเดิมของ check
-  //   let inState = [...newFilter[1]];
-
-  //   let findCheck = inState.indexOf(inCheck);
-
-  //   if (findCheck === -1) {
-  //     inState.push(inCheck);
-  //   } else {
-  //     inState.splice(findCheck, 1);
-  //   }
-  //   setNewFilter({ theme: inState });
-  //   // fetchDataFilter({ theme: inState });
-  //   if (inState.length < 1) {
-  //     loadData();
-  //   }
-  // };
+  const ClickFilter = async () => {
+    await GetFilters(categorySelect, themeSelect)
+      .then((res) => {
+        setModsData(res.data);
+        // console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <>
@@ -188,6 +200,7 @@ const Downloadmods = () => {
             </div>
             <hr />
             <h5 className="title">ตัวเลือกเพิ่มเติม</h5>
+            <Button onClick={ClickFilter}>ยืนยันตัวเลือก</Button>
           </PanelWrap>
           <ListWrap>
             <Row gutter={[16, 16]}>
@@ -198,7 +211,7 @@ const Downloadmods = () => {
                   </div>
                 </Col>
               ))}
-              <Pagination onChange={onChange} defaultCurrent={1} total={6} />
+              {/* <Pagination onChange={onChange} defaultCurrent={1} total={6} /> */}
             </Row>
           </ListWrap>
         </PanelListWrap>

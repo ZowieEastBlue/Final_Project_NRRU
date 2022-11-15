@@ -6,12 +6,20 @@ import logo from "../assets/images/logo.png";
 const items = [
   // {
   //   label: (
-  //     <NavLink to="/admin">
+  //     <NavLink to="/admin/Testdashboard">
   //       <span className="label">Admin</span>
   //     </NavLink>
   //   ),
   //   key: "1",
   // },
+  {
+    label: (
+      <NavLink to="/admin/dashboard">
+        <span className="label">แดชบอร์ด</span>
+      </NavLink>
+    ),
+    key: "10",
+  },
   // {
   //   label: (
   //     <NavLink to="/admin/tables">
@@ -59,6 +67,14 @@ const items = [
       </NavLink>
     ),
     key: "9",
+  },
+  {
+    label: (
+      <NavLink to="/admin/manage-mods">
+        <span className="label">จัดการMOD</span>
+      </NavLink>
+    ),
+    key: "11",
   },
 ];
 
