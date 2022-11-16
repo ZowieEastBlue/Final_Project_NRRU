@@ -256,24 +256,40 @@ exports.removeMods = async (req, res) => {
 
 // ค้นหาตามชื่อ(text)
 const handleQuery = async (req, res, query) => {
-  let mods = await Mods.findAll({
-    include: [
-      {
-        model: Category,
-      },
-      {
-        model: Theme,
-      },
-    ],
-    where: {
-      [Op.or]: [
-        { m_name: { [Op.like]: "%" + query + "%" } },
-        // { cat_id: { [Op.like]: "%" + query + "%" } },
+  if (!query) {
+    const mod = await Mods.findAll({
+      include: [
+        {
+          model: Category,
+        },
+        {
+          model: Theme,
+        },
       ],
-      // cat_name: { [Op.like]: "%" + query + "%" },
-    },
-  });
-  res.send(mods);
+    });
+
+    res.send(mod);
+    return;
+  } else {
+    let mods = await Mods.findAll({
+      include: [
+        {
+          model: Category,
+        },
+        {
+          model: Theme,
+        },
+      ],
+      where: {
+        [Op.or]: [
+          { m_name: { [Op.like]: "%" + query + "%" } },
+          // { cat_id: { [Op.like]: "%" + query + "%" } },
+        ],
+        // cat_name: { [Op.like]: "%" + query + "%" },
+      },
+    });
+    res.send(mods);
+  }
 };
 
 //ค้นหาด้วยหมวดหมู่
@@ -327,11 +343,11 @@ exports.getFilters = async (req, res) => {
   console.log(req.body);
   let mods = await Mods.findAll({
     where: {
-      [Op.or]: [{ cat_id: req.body.category }, { theme_id: req.body.theme }],
+      [Op.and]: [{ cat_id: req.body.category }, { theme_id: req.body.theme }],
     },
   });
 
-  res.send(mods);
+  res.status(200).json(mods);
 };
 
 // function รวม Filter ทั้งหมด

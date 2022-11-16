@@ -21,16 +21,12 @@ const Downloadmods = () => {
   //Category Data
   const [category, setCategory] = useState([]);
   const [categorySelect, setCategorySelect] = useState([]);
-  console.log("categorySelect=>", categorySelect);
+  // console.log("categorySelect=>", categorySelect);
 
   //Theme Data
   const [theme, setTheme] = useState([]);
   const [themeSelect, setThemeSelect] = useState([]);
-  console.log("themeSelect=>", themeSelect);
-
-  // const [newFilter, setNewFilter] = useState([{ category: [] }, { theme: [] }]);
-
-  // console.log("Filter", newFilter);
+  // console.log("themeSelect=>", themeSelect);
 
   const { searchStore } = useSelector((state) => ({ ...state }));
   // text
@@ -164,14 +160,25 @@ const Downloadmods = () => {
   };
 
   const ClickFilter = async () => {
-    await GetFilters(categorySelect, themeSelect)
+    await axios
+      .post(process.env.REACT_APP_API + "/search/getFilters", {
+        category: categorySelect,
+        theme: themeSelect,
+      })
       .then((res) => {
         setModsData(res.data);
-        // console.log(res);
       })
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const ResetFilter = (e) => {
+    loadData();
+    listCategory().then((res) => setCategory(res.data));
+    listTheme().then((res) => setTheme(res.data));
+    setCategorySelect([]);
+    setThemeSelect([]);
   };
 
   return (
@@ -200,7 +207,10 @@ const Downloadmods = () => {
             </div>
             <hr />
             <h5 className="title">ตัวเลือกเพิ่มเติม</h5>
-            <Button onClick={ClickFilter}>ยืนยันตัวเลือก</Button>
+            <div className="wrap_button_filter">
+              <Button onClick={ClickFilter}>ยืนยันตัวเลือก</Button>
+              <Button onClick={ResetFilter}>ล้างตัวเลือก</Button>
+            </div>
           </PanelWrap>
           <ListWrap>
             <Row gutter={[16, 16]}>
@@ -243,6 +253,11 @@ const PanelWrap = styled.div`
   .categoryList {
     display: flex;
     flex-direction: column;
+  }
+
+  .wrap_button_filter {
+    margin-top: 0.5rem;
+    display: flex;
   }
 `;
 

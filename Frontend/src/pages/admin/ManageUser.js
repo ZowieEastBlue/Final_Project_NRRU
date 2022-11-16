@@ -111,10 +111,10 @@ const ManageUser = () => {
       key: "7",
       render: (_, record) => (
         <Space size="middle">
-          <EditOutlined
+          {/* <EditOutlined
             style={{ color: "orange" }}
             onClick={() => showModal(record.user_id)}
-          />
+          /> */}
           <DeleteOutlined
             style={{ color: "red" }}
             onClick={() => handleRemove(record.user_id)}
