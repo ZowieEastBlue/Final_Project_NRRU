@@ -28,7 +28,7 @@ const Downloadmods = () => {
   const [themeSelect, setThemeSelect] = useState([]);
   console.log("themeSelect=>", themeSelect);
 
-  const [newFilter, setNewFilter] = useState([{ category: [] }, { theme: [] }]);
+  // const [newFilter, setNewFilter] = useState([{ category: [] }, { theme: [] }]);
 
   // console.log("Filter", newFilter);
 
@@ -65,22 +65,12 @@ const Downloadmods = () => {
     });
   };
 
-  const ClickFilter = async () => {
-    await GetFilters(categorySelect, themeSelect)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err.response);
-      });
-  };
+  // const [current, setCurrent] = useState();
 
-  const [current, setCurrent] = useState();
-
-  const onChange = (page) => {
-    console.log(page);
-    setCurrent(page);
-  };
+  // const onChange = (page) => {
+  //   console.log(page);
+  //   setCurrent(page);
+  // };
 
   // // เลือกตัวเลือก หมวดหมู่
   // const handleCheckCategory = (e) => {
@@ -129,28 +119,6 @@ const Downloadmods = () => {
 
   // ทดลอง Fitler--------------------------------------------------
   //เลือกตัวเลือก หมวดหมู่
-  // const handleCheckFilter = (e) => {
-  //   //ค่าปัจจุบันที่ check
-  //   let inCheck = e.target.value;
-
-  //   //ค่าเดิมของ check
-  //   let inState = [...themeSelect];
-
-  //   let findCheck = inState.indexOf(inCheck);
-
-  //   if (findCheck === -1) {
-  //     inState.push(inCheck);
-  //   } else {
-  //     inState.splice(findCheck, 1);
-  //   }
-  //   setNewFilter({ filter: inState });
-  //   console.log(inState);
-  //   setThemeSelect({ filter: inState });
-  //   if (inState.length < 1) {
-  //     loadData();
-  //   }
-  // };
-  // เลือกตัวเลือก หมวดหมู่
   const handleCheckCategory = (e) => {
     //ค่าปัจจุบันที่ check
     let inCheck = e.target.value;
@@ -166,7 +134,7 @@ const Downloadmods = () => {
       inState.splice(findCheck, 1);
     }
     setCategorySelect(inState);
-    // fetchDataFilter({ category: inState });
+    // console.log(inState);
     // if (inState.length < 1) {
     //   loadData();
     // }
@@ -195,6 +163,17 @@ const Downloadmods = () => {
     // }
   };
 
+  const ClickFilter = async () => {
+    await GetFilters(categorySelect, themeSelect)
+      .then((res) => {
+        setModsData(res.data);
+        // console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <>
       <Container>
@@ -221,7 +200,7 @@ const Downloadmods = () => {
             </div>
             <hr />
             <h5 className="title">ตัวเลือกเพิ่มเติม</h5>
-            <Button onClick={ClickFilter}>ค้นหา</Button>
+            <Button onClick={ClickFilter}>ยืนยันตัวเลือก</Button>
           </PanelWrap>
           <ListWrap>
             <Row gutter={[16, 16]}>
@@ -232,7 +211,7 @@ const Downloadmods = () => {
                   </div>
                 </Col>
               ))}
-              <Pagination onChange={onChange} defaultCurrent={1} total={6} />
+              {/* <Pagination onChange={onChange} defaultCurrent={1} total={6} /> */}
             </Row>
           </ListWrap>
         </PanelListWrap>

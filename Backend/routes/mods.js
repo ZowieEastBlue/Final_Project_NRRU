@@ -13,6 +13,12 @@ const {
   downloadMods,
   listModsByTopDownload,
   ReadModsToEditByID,
+  getFilters,
+  getModGropByMonth,
+  getSumDownload,
+  getAllModsOrderID,
+  getAllModsOrderDate,
+  getAllModsOrderDownload,
 } = require("../controllers/modsController");
 
 const { auth } = require("../middleware/auth");
@@ -61,5 +67,13 @@ router.delete("/mods/removemods/:id", removeMods);
 //@Access   Publish
 // Search
 router.post("/search/filters", searchFilters);
+router.post("/search/getFilters", getFilters);
+
+//Routes สำหรับหน้า Dashboard-------------------------------------------------------
+router.get("/mods/getModGroupBy/Month", getModGropByMonth);
+router.get("/mods/getSumDownload", getSumDownload);
+router.get("/mods/getAllModsOrderID", getAllModsOrderID);
+router.get("/mods/getAllModsOrderDate", getAllModsOrderDate);
+router.get("/mods/getAllModsOrderDownload", getAllModsOrderDownload);
 
 module.exports = router;

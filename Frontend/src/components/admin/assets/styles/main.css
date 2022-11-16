@@ -961,6 +961,9 @@ button.ant-btn.bell strong {
   border-radius: 0.5rem;
   margin-left: auto;
   line-height: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .icon-box span {

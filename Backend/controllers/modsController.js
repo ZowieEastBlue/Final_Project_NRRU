@@ -174,7 +174,9 @@ exports.ReadModsUser = async (req, res) => {
 // เรียกดู Mods ทั้งหมด
 exports.listMods = async (req, res) => {
   try {
-    const mod = await Mods.findAll({});
+    const mod = await Mods.findAll({
+      include: [{ model: User, required: true }],
+    });
     res.json(mod);
   } catch (err) {
     console.log(err);
@@ -319,6 +321,16 @@ const handleFilter = async (req, res, theme) => {
       },
     ],
   });
+};
+
+exports.getFilters = async (req, res) => {
+  console.log(req.body);
+  let mods = await Mods.findAll({
+    where: {
+      [Op.or]: [{ cat_id: req.body.category }, { theme_id: req.body.theme }],
+    },
+  });
+
   res.send(mods);
 };
 
@@ -336,12 +348,24 @@ exports.searchFilters = async (req, res) => {
   // ค้นหาด้วย category
   // if (category) {
   //   // console.log("category=>", category);
+  const { query } = req.body;
+
+  // //ค้นหาด้วย text
+  if (query) {
+    console.log("query", query);
+    await handleQuery(req, res, query);
+  }
+
+  // // ค้นหาด้วย category
+  // if (category) {
+  //   console.log("category=>", category);
   //   await handleCategory(req, res, category);
   // }
 
   // //ค้นหาด้วย theme
   // if (theme) {
   //   // console.log("theme=>", theme);
+  //   console.log("theme=>", theme);
   //   await handleTheme(req, res, theme);
   // }
 
@@ -349,4 +373,65 @@ exports.searchFilters = async (req, res) => {
   //   // console.log("filter=>", filter);
   //   await handleFilter(req, res, filter);
   // }
+  //   console.log("filter=>", filter);
+  //   await handleCategory(req, res, filter);
+  // }
+};
+
+// สำหรับ DashBoard--------------------------------------------
+exports.getModGropByMonth = async (req, res) => {
+  let mods = await Mods.findAll({
+    attributes: [
+      [Sequelize.fn("MONTH", Sequelize.col("create_At")), "Month"],
+      [Sequelize.fn("COUNT", Sequelize.col("m_id")), "Total"],
+    ],
+    group: [Sequelize.fn("MONTH", Sequelize.col("create_At")), "Month"],
+  });
+
+  res.send(mods);
+};
+
+exports.getSumDownload = async (req, res) => {
+  let mods = await Mods.sum("m_download");
+
+  res.json(mods);
+};
+
+exports.getAllModsOrderID = async (req, res) => {
+  try {
+    const mod = await Mods.findAll({
+      include: [{ model: User, required: true }],
+      order: [["m_id", "ASC"]],
+    });
+    res.json(mod);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server Error!");
+  }
+};
+
+exports.getAllModsOrderDate = async (req, res) => {
+  try {
+    const mod = await Mods.findAll({
+      include: [{ model: User, required: true }],
+      order: [["create_at", "DESC"]],
+    });
+    res.json(mod);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server Error!");
+  }
+};
+
+exports.getAllModsOrderDownload = async (req, res) => {
+  try {
+    const mod = await Mods.findAll({
+      include: [{ model: User, required: true }],
+      order: [["m_download", "DESC"]],
+    });
+    res.json(mod);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server Error!");
+  }
 };

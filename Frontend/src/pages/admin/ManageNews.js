@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 
 //functions
 // import { listUsers, removeUsers } from "../../functions/users";
-import { listNews } from "../../functions/news";
+import { listNews, removeNews } from "../../functions/news";
 
 //Layout
 import Main from "../../components/admin/layout/Main";
@@ -52,17 +52,17 @@ const ManageNews = () => {
   //ลบข้อมูล
   const handleRemove = (record) => {
     Modal.confirm({
-      title: "คุณต้องการจะลบผู้ใช้นี้หรือไม่ ?",
+      title: "คุณต้องการจะลบข่าวนี้หรือไม่ ?",
       onOk: () => {
-        // removeUsers(userStore.value.token, record)
-        //   .then((res) => {
-        //     message.success(res.data.message);
-        //     loadData();
-        //   })
-        //   .catch((err) => {
-        //     //err
-        //     console.log(err.response.data);
-        //   });
+        removeNews(record)
+          .then((res) => {
+            message.success(res.data.message);
+            loadData();
+          })
+          .catch((err) => {
+            //err
+            console.log(err.response.data);
+          });
       },
     });
   };

@@ -68,6 +68,17 @@ exports.EditNews = async (req, res) => {
   }
 };
 
+//ลบข่าว
+exports.RemoveNews = async (req, res) => {
+  try {
+    const news = await News.destroy({ where: { n_id: req.params.id } });
+    res.status(201).json({ status: "ok", message: "ลบข่าวนี้แล้ว" });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server Error!");
+  }
+};
+
 //เรียกข่าวทั้งหมด
 exports.getAllNews = async (req, res) => {
   try {

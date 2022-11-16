@@ -40,3 +40,10 @@ export const uploadImageUsers = async (authtoken, id, values) => {
     }
   );
 };
+
+// สำหรับ DashBorad----------------------------------
+export const getUserGroupByMonth = async () => {
+  return await axios.get(
+    process.env.REACT_APP_API + "/users/getUserGroupBy/Mouth"
+  );
+};

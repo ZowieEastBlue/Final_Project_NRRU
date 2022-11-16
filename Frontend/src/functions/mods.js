@@ -24,26 +24,51 @@ export const listModsForEdit = async (id) => {
   return await axios.get(process.env.REACT_APP_API + "/listmodsForEdit/" + id);
 };
 
-export const removeMods = async (authtoken, id) => {
+export const removeMods = async (id) => {
   console.log("D id=>", id);
   return await axios.delete(
-    process.env.REACT_APP_API + "/mods/removemods/" + id,
-    {
-      headers: {
-        authtoken,
-      },
-    }
+    process.env.REACT_APP_API + "/mods/removemods/" + id
   );
 };
 
 export const searchFilters = async (arg) =>
   await axios.post(process.env.REACT_APP_API + "/search/filters", arg);
 
-export const GetFilters = async (arg1, arg2) => {
-  console.log(arg1, arg2);
-  await axios.post(process.env.REACT_APP_API + "/search/filters", arg1, arg2);
+export const GetFilters = async (arg1, arg2, arg3) => {
+  console.log("ar=>", arg1, arg2);
+  await axios.post(process.env.REACT_APP_API + "/search/getFilters", {
+    category: arg1,
+    theme: arg2,
+  });
 };
 
 export const DownloadmodsByID = async (id) => {
   return await axios.get(process.env.REACT_APP_API + "/mods/download/" + id);
+};
+
+// สำหรับ DashBoard---------------------------------------------
+export const getModsGroupByMonth = async () => {
+  return await axios.get(
+    process.env.REACT_APP_API + "/mods/getModGroupBy/Month"
+  );
+};
+
+export const getSumDownload = async () => {
+  return await axios.get(process.env.REACT_APP_API + "/mods/getSumDownload");
+};
+
+export const getAllModsOrderID = async () => {
+  return await axios.get(process.env.REACT_APP_API + "/mods/getAllModsOrderID");
+};
+
+export const getAllModsOrderDate = async () => {
+  return await axios.get(
+    process.env.REACT_APP_API + "/mods/getAllModsOrderDate"
+  );
+};
+
+export const getAllModsOrderDownload = async () => {
+  return await axios.get(
+    process.env.REACT_APP_API + "/mods/getAllModsOrderDownload"
+  );
 };
