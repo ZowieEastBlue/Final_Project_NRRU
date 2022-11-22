@@ -15,6 +15,14 @@ export const listMods = async () => {
   return await axios.get(process.env.REACT_APP_API + "/mods");
 };
 
+export const listModsTop = async () => {
+  return await axios.get(process.env.REACT_APP_API + "/mods/top");
+};
+
+export const LastData = async () => {
+  return await axios.get(process.env.REACT_APP_API + "/mods/last");
+};
+
 export const listModsByTopDownload = async () => {
   return await axios.get(process.env.REACT_APP_API + "/mods/listByTopdownload");
 };

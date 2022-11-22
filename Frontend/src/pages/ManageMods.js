@@ -50,11 +50,11 @@ const ManageMods = () => {
   };
 
   const columns = [
-    // {
-    //   title: "ID MOD",
-    //   dataIndex: "m_id",
-    //   key: "1",
-    // },
+    {
+      title: "ชื้อผู้ใช้",
+      dataIndex: ["user", "username"],
+      key: "1",
+    },
     {
       title: "ชื่อMOD",
       dataIndex: "m_name",

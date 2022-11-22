@@ -19,6 +19,8 @@ const {
   getAllModsOrderID,
   getAllModsOrderDate,
   getAllModsOrderDownload,
+  LastData,
+  listModsTop,
 } = require("../controllers/modsController");
 
 const { auth } = require("../middleware/auth");
@@ -43,6 +45,8 @@ router.get("/mods/users/:id", ReadModsUser);
 //@Method   GET
 //@Access   Publish
 router.get("/mods", listMods);
+router.get("/mods/last", LastData);
+router.get("/mods/top", listModsTop);
 
 router.get("/mods/listByTopdownload", listModsByTopDownload);
 

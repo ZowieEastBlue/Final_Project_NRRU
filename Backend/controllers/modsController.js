@@ -176,6 +176,35 @@ exports.listMods = async (req, res) => {
   try {
     const mod = await Mods.findAll({
       include: [{ model: User, required: true }],
+      order: [["create_at", "DESC"]],
+    });
+    res.json(mod);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server Error!");
+  }
+};
+
+exports.listModsTop = async (req, res) => {
+  try {
+    const mod = await Mods.findAll({
+      include: [{ model: User, required: true }],
+      order: [["m_download", "DESC"]],
+      limit: 3,
+    });
+    res.json(mod);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server Error!");
+  }
+};
+
+exports.LastData = async (req, res) => {
+  try {
+    const mod = await Mods.findAll({
+      include: [{ model: User, required: true }],
+      order: [["create_at", "DESC"]],
+      limit: 3,
     });
     res.json(mod);
   } catch (err) {
