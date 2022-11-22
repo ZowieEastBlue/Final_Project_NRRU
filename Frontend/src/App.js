@@ -122,6 +122,14 @@ function App() {
             }
           />
           <Route
+            path="/download/:id"
+            element={
+              <Header>
+                <Downloadmods />
+              </Header>
+            }
+          />
+          <Route
             path="/onemod/:id"
             element={
               <Header>

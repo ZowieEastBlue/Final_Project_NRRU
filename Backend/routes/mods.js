@@ -19,8 +19,10 @@ const {
   getAllModsOrderID,
   getAllModsOrderDate,
   getAllModsOrderDownload,
-  LastData,
+  LastMods,
   listModsTop,
+  FilterCategory,
+  listModsByCategory,
 } = require("../controllers/modsController");
 
 const { auth } = require("../middleware/auth");
@@ -45,7 +47,7 @@ router.get("/mods/users/:id", ReadModsUser);
 //@Method   GET
 //@Access   Publish
 router.get("/mods", listMods);
-router.get("/mods/last", LastData);
+router.get("/mods/last", LastMods);
 router.get("/mods/top", listModsTop);
 
 router.get("/mods/listByTopdownload", listModsByTopDownload);
@@ -72,6 +74,10 @@ router.delete("/mods/removemods/:id", removeMods);
 // Search
 router.post("/search/filters", searchFilters);
 router.post("/search/getFilters", getFilters);
+
+//ทดลอง Filter
+router.post("/filter/mods/", FilterCategory);
+router.get("/listmodsByCategory/:id", listModsByCategory);
 
 //Routes สำหรับหน้า Dashboard-------------------------------------------------------
 router.get("/mods/getModGroupBy/Month", getModGropByMonth);

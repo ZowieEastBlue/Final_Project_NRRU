@@ -8,6 +8,7 @@ const Theme = db.theme;
 
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
+const { QueryTypes } = require("sequelize");
 
 // upload mods
 exports.uploadMods = async (req, res) => {
@@ -199,7 +200,7 @@ exports.listModsTop = async (req, res) => {
   }
 };
 
-exports.LastData = async (req, res) => {
+exports.LastMods = async (req, res) => {
   try {
     const mod = await Mods.findAll({
       include: [{ model: User, required: true }],
@@ -423,7 +424,56 @@ exports.searchFilters = async (req, res) => {
   // }
 };
 
-// สำหรับ DashBoard--------------------------------------------
+exports.FilterCategory = async (req, res) => {
+  // console.log(req.params);
+  console.log(req.body);
+  // console.log("filterQ", req.query);
+  const where = {};
+  // let mods = await db.sequelize.query("SELECT * FROM tb_mods WHERE = ?", {
+  //   type: QueryTypes.SELECT,
+  // });
+
+  const {
+    category,
+    theme,
+    house,
+    character,
+    clothes,
+    shoes,
+    furniture,
+    accessories,
+    hairstyle,
+  } = req.body;
+  if (category) where.cat_id = { [Op.eq]: category };
+  if (theme) where.theme_id = { [Op.in]: theme };
+  if (house) where.house_id = { [Op.in]: house };
+  if (character) where.char_id = { [Op.in]: character };
+  if (clothes) where.clot_id = { [Op.in]: clothes };
+  if (shoes) where.shoe_id = { [Op.in]: shoes };
+  if (furniture) where.furn_id = { [Op.in]: furniture };
+  if (accessories) where.acc_id = { [Op.in]: accessories };
+  if (hairstyle) where.hair_id = { [Op.in]: hairstyle };
+  // console.log(where);
+
+  const mods = await Mods.findAll({
+    where: {
+      ...where,
+    },
+  });
+
+  res.status(200).json(mods);
+};
+
+// list mods ตาม category
+exports.listModsByCategory = async (req, res) => {
+  let mods = await Mods.findAll({
+    where: { cat_id: req.params.id },
+  });
+
+  res.status(200).json(mods);
+};
+
+// สำหรับ DashBoard----------------------------------------------------------------------------------------------------------
 exports.getModGropByMonth = async (req, res) => {
   let mods = await Mods.findAll({
     attributes: [
