@@ -23,6 +23,7 @@ const {
   listModsTop,
   FilterCategory,
   listModsByCategory,
+  updateMods,
 } = require("../controllers/modsController");
 
 const { auth } = require("../middleware/auth");
@@ -34,6 +35,9 @@ const { uploadModMiddleware } = require("../middleware/upload");
 //@Method   POST
 //@Access   Private
 router.post("/mods", uploadModMiddleware, uploadMods);
+
+//แก้ไขMODโดยผู้ใช้
+router.put("/mods/:id", uploadModMiddleware, updateMods);
 
 // Download
 router.get("/mods/download/:id", downloadMods);

@@ -7,6 +7,18 @@ export const UploadMods = async (values) => {
   });
 };
 
+export const EditMods = async (id, FormData, Category) => {
+  // console.log("DataToUpload", values);
+  return await axios.put(
+    process.env.REACT_APP_API + "/mods/" + id,
+    FormData,
+    Category,
+    {
+      headers: { "content-type": "multipart/form-data" },
+    }
+  );
+};
+
 export const readModsUsers = async (id) => {
   return await axios.get(process.env.REACT_APP_API + "/mods/users/" + id, {});
 };

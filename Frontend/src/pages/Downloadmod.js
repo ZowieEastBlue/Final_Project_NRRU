@@ -28,7 +28,7 @@ import { listTheme } from "../functions/theme";
 
 const Downloadmods = () => {
   const params = useParams();
-  console.log("pa", params);
+  // console.log("pa", params);
   const [loading, setLoading] = useState(false);
   const [modsData, setModsData] = useState([]);
 
@@ -48,10 +48,10 @@ const Downloadmods = () => {
   const [clothesData, setClothesData] = useState([]);
   const [characterData, setCharacterData] = useState([]);
   const [accessoriesData, setAccessoriesData] = useState([]);
-  console.log("h", houseData);
+  // console.log("h", houseData);
 
   const [optionSelect, setOptionSelect] = useState([]);
-  console.log("option", optionSelect);
+  // console.log("option", optionSelect);
 
   const { searchStore } = useSelector((state) => ({ ...state }));
   // text
@@ -249,7 +249,7 @@ const Downloadmods = () => {
   const handleCheckOption = (e) => {
     //ค่าปัจจุบันที่ check
     let inCheck = e.target.value;
-    console.log("e=> ", e.target.value);
+    // console.log("e=> ", e.target.value);
 
     //ค่าเดิมของ check
     let inState = [...optionSelect];

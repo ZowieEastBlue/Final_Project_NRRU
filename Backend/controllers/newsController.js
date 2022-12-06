@@ -50,18 +50,6 @@ exports.EditNews = async (req, res) => {
       );
       res.status(201).json({ success: true, message: "แก้ไขสำเร็จ" });
     }
-
-    // const rows = await News.update(
-    //   {
-    //     n_title: req.body.n_title,
-    //     n_cover: req.file.path,
-    //     n_detail: req.body.description,
-    //   },
-    //   {
-    //     where: { n_id: req.params.id },
-    //   }
-    // );
-    // res.status(201).json({ success: true, message: "แก้ไขสำเร็จ" });
   } catch (err) {
     console.log(err);
     res.status(500).send("Server Error!");

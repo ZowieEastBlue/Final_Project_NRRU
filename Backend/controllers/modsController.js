@@ -136,6 +136,23 @@ exports.uploadMods = async (req, res) => {
   }
 };
 
+// update mods
+exports.updateMods = async (req, res) => {
+  try {
+    // ตัวเลือก category
+    // console.log(req.body);
+    console.log(req.files);
+    console.log(req.body);
+    let category = req.body.cat_id[0];
+    let CategoryOption = req.body.cat_id[2];
+
+    // res.status(201).json({ status: "ok", message: "อัปโหลดMODสำเร็จ" });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server Error!");
+  }
+};
+
 // download mods
 exports.downloadMods = async (req, res) => {
   const Dmods = await Mods.findAll({
@@ -425,13 +442,8 @@ exports.searchFilters = async (req, res) => {
 };
 
 exports.FilterCategory = async (req, res) => {
-  // console.log(req.params);
   console.log(req.body);
-  // console.log("filterQ", req.query);
   const where = {};
-  // let mods = await db.sequelize.query("SELECT * FROM tb_mods WHERE = ?", {
-  //   type: QueryTypes.SELECT,
-  // });
 
   const {
     category,

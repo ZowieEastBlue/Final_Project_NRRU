@@ -6,11 +6,46 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { UploadOutlined } from "@ant-design/icons";
 
+//redux
+import { useSelector } from "react-redux";
+
+//fuction
+import { EditMods } from "../functions/mods";
+
 const EditModsDetail = (props) => {
   console.log("prop=>", props);
+  console.log("cat", props.ModsList[0].cat_id);
+  const { userStore } = useSelector((state) => ({ ...state }));
 
   const { editModsID } = props;
-  const { m_name, m_detail, theme_id } = props.ModsList[0];
+  const {
+    m_name,
+    m_detail,
+    theme_id,
+    shoe_id,
+    acc_id,
+    char_id,
+    cat_id,
+    clot_id,
+    furn_id,
+    hair_id,
+    house_id,
+    m_file,
+    m_img1,
+    m_img2,
+    m_img3,
+  } = props.ModsList[0];
+
+  let cat = cat_id;
+  let op =
+    shoe_id ||
+    acc_id ||
+    char_id ||
+    clot_id ||
+    clot_id ||
+    furn_id ||
+    hair_id ||
+    house_id;
 
   const [loading, setLoading] = useState(false);
 
@@ -30,6 +65,8 @@ const EditModsDetail = (props) => {
   const [img1FileList, setImg1FileList] = useState([]);
   const [img2FileList, setImg2FileList] = useState([]);
   const [img3FileList, setImg3FileList] = useState([]);
+  const [category, setCategory] = useState([]);
+  console.log("cat", category);
 
   // โหลดข้อมูล
   useEffect(() => {
@@ -180,8 +217,91 @@ const EditModsDetail = (props) => {
     return e && e.fileList;
   };
 
-  const handleSubmit = (value) => {
-    console.log(value);
+  const handleSubmit = async (values) => {
+    console.log("values>>", values);
+    const formData = new FormData();
+
+    formData.append("m_file", modFileList);
+    formData.append("m_img1", img1FileList);
+    formData.append("m_img2", img2FileList);
+    formData.append("m_img3", img3FileList);
+    formData.append("m_name", values.m_name);
+    formData.append("theme_id", values.themeID);
+    formData.append(category);
+    formData.append("m_detail", values.m_detail);
+
+    await EditMods(editModsID, formData, category)
+      .then((res) => {
+        message.success(res.data.message);
+      })
+      .catch((err) => {
+        console.log(err);
+        message.error(err.response);
+      });
+  };
+
+  // ค่าไฟล์เริ่มต้น
+  const ModsFile = {
+    defaultFileList: [
+      {
+        name: `${m_file}`,
+      },
+    ],
+  };
+  const Img1 = {
+    defaultFileList: [
+      {
+        name: `${m_img1}`,
+      },
+    ],
+  };
+  const Img2 = {
+    defaultFileList: [
+      {
+        name: `${m_img2}`,
+      },
+    ],
+  };
+  const Img3 = {
+    defaultFileList: [
+      {
+        name: `${m_img3}`,
+      },
+    ],
+  };
+
+  const onChange = (value) => {
+    const category = value[0];
+    const option = value[1];
+
+    if (category === 1) {
+      const cat = { cat_id: category, house_id: option };
+      setCategory(cat);
+    }
+    if (category === 2) {
+      const cat = { cat_id: category, char_id: option };
+      setCategory(cat);
+    }
+    if (category === 3) {
+      const cat = { cat_id: category, clot_id: option };
+      setCategory(cat);
+    }
+    if (category === 4) {
+      const cat = { cat_id: category, shoe_id: option };
+      setCategory(cat);
+    }
+    if (category === 5) {
+      const cat = { cat_id: category, furn_id: option };
+      setCategory(cat);
+    }
+    if (category === 6) {
+      const cat = { cat_id: category, acc_id: option };
+      setCategory(cat);
+    }
+    if (category === 7) {
+      const cat = { cat_id: category, hair_id: option };
+      setCategory(cat);
+    }
   };
 
   return (
@@ -244,19 +364,20 @@ const EditModsDetail = (props) => {
                     label="เลือกหมวดหมู่"
                     name="categoryID"
                     style={{ textAlign: "left" }}
-                    rules={[
-                      {
-                        required: true,
-                        message: "กรุณากรอกหมวดหมู่!",
-                      },
-                    ]}
+                    // rules={[
+                    //   {
+                    //     required: true,
+                    //     message: "กรุณากรอกหมวดหมู่!",
+                    //   },
+                    // ]}
                   >
                     <Cascader
+                      defaultValue={[`${cat}`, `${op}`]}
                       style={{
                         width: "100%",
                       }}
                       options={options}
-                      // onChange={onChange}
+                      onChange={onChange}
                       maxTagCount={1}
                       placeholder="กรุณาเลือกหมวดหมู่"
                     />
@@ -268,12 +389,12 @@ const EditModsDetail = (props) => {
                     style={{ textAlign: "left" }}
                     valuePropName="fileList"
                     getValueFromEvent={normFile}
-                    rules={[
-                      {
-                        required: true,
-                        message: "กรุณากรอกเลือกไฟล์!",
-                      },
-                    ]}
+                    // rules={[
+                    //   {
+                    //     required: true,
+                    //     message: "กรุณากรอกเลือกไฟล์!",
+                    //   },
+                    // ]}
                   >
                     <Upload
                       beforeUpload={(file) => {
@@ -282,6 +403,7 @@ const EditModsDetail = (props) => {
                       }}
                       style={{ textAlign: "left" }}
                       name="m_file"
+                      {...ModsFile}
                     >
                       <Button icon={<UploadOutlined />} className="btn_upload">
                         อัปโหลดไฟล์
@@ -290,17 +412,17 @@ const EditModsDetail = (props) => {
                   </Form.Item>
                   {/* upload image 1 */}
                   <Form.Item
-                    label="เลือกไฟล์รูป 1"
+                    label="เลือกรูปหน้าปก"
                     name="m_img1"
                     style={{ textAlign: "left" }}
                     valuePropName="fileList"
                     getValueFromEvent={normFile}
-                    rules={[
-                      {
-                        required: true,
-                        message: "กรุณากรอกเลือกไฟล์!",
-                      },
-                    ]}
+                    // rules={[
+                    //   {
+                    //     required: true,
+                    //     message: "กรุณากรอกเลือกไฟล์!",
+                    //   },
+                    // ]}
                   >
                     <Upload
                       beforeUpload={(file) => {
@@ -310,6 +432,7 @@ const EditModsDetail = (props) => {
                       style={{ textAlign: "left" }}
                       maxCount={1}
                       name="m_img1"
+                      {...Img1}
                     >
                       <Button icon={<UploadOutlined />} className="btn_upload">
                         อัปโหลดรูป 1
@@ -318,17 +441,17 @@ const EditModsDetail = (props) => {
                   </Form.Item>
                   {/* upload image 2 */}
                   <Form.Item
-                    label="เลือกไฟล์รูป 2"
+                    label="เลือกรูปรายละเอียดMOD 1"
                     name="m_img2"
                     style={{ textAlign: "left" }}
                     valuePropName="fileList"
                     getValueFromEvent={normFile}
-                    rules={[
-                      {
-                        required: true,
-                        message: "กรุณากรอกเลือกไฟล์!",
-                      },
-                    ]}
+                    // rules={[
+                    //   {
+                    //     required: true,
+                    //     message: "กรุณากรอกเลือกไฟล์!",
+                    //   },
+                    // ]}
                   >
                     <Upload
                       beforeUpload={(file) => {
@@ -336,6 +459,7 @@ const EditModsDetail = (props) => {
                         return false;
                       }}
                       style={{ textAlign: "left" }}
+                      {...Img2}
                     >
                       <Button icon={<UploadOutlined />} className="btn_upload">
                         อัปโหลดรูป 2
@@ -344,17 +468,17 @@ const EditModsDetail = (props) => {
                   </Form.Item>
                   {/* upload image 3 */}
                   <Form.Item
-                    label="เลือกไฟล์รูป 3"
+                    label="เลือกรูปรายละเอียดMOD 2"
                     name="m_img3"
                     style={{ textAlign: "left" }}
                     valuePropName="fileList"
                     getValueFromEvent={normFile}
-                    rules={[
-                      {
-                        required: true,
-                        message: "กรุณากรอกเลือกไฟล์!",
-                      },
-                    ]}
+                    // rules={[
+                    //   {
+                    //     required: true,
+                    //     message: "กรุณากรอกเลือกไฟล์!",
+                    //   },
+                    // ]}
                   >
                     <Upload
                       beforeUpload={(file) => {
@@ -362,6 +486,7 @@ const EditModsDetail = (props) => {
                         return false;
                       }}
                       style={{ textAlign: "left" }}
+                      {...Img3}
                     >
                       <Button icon={<UploadOutlined />} className="btn_upload">
                         อัปโหลดรูป 3
